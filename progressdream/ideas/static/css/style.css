@@ -16,8 +16,16 @@ body {
     background-color: #1a1a2e; /* Dark blue background */
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px 10px #0000002b;
+    max-width: 35%;
+    color: #fff;
 }
+.form-flexy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .form-container label {
     color: #ffffff;
 }
@@ -36,4 +44,10 @@ body {
 }
 .form-container .btn-primary:hover {
     background-color: #0056b3; /* Darker blue */
+}
+
+input {
+    margin: 10px !important;
+    padding: 5px !important;
+    border-radius: 10px !important;
 }

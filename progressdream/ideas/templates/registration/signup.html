@@ -1,9 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="form-container">
+    <h3>Sign Up</h3>
     <form method="post">
         {% csrf_token %}
-        {{form}}
-        <button type="submit">Submit</button>
+        <div class="form-flexy">
+            <div>
+                <span>Username:</span>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div>
+                <span>Password:</span>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div>
+                <span>Confirm Password:</span>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign Up!</button>
     </form>
+</div>
 {% endblock content %}
-

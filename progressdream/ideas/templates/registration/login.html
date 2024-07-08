@@ -1,11 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="form-container">
+    <h3>Login</h3>
     <form method="post">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <div class="form-flexy">
+            <div>
+                <span>Username:</span>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div>
+                <span>Password:</span>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="error">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
     </form>
 </div>
 {% endblock content %}
-
