@@ -3,3 +3,37 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-color: #343a40; /* Dark gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.form-container {
+    background-color: #1a1a2e; /* Dark blue background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.form-container label {
+    color: #ffffff;
+}
+.form-container .form-control {
+    background-color: #343a40; /* Dark gray input background */
+    color: #ffffff;
+    border: 1px solid #495057;
+}
+.form-container .form-control:focus {
+    background-color: #495057; /* Slightly lighter gray */
+    color: #ffffff;
+}
+.form-container .btn-primary {
+    background-color: #007bff; /* Bootstrap primary blue */
+    border: none;
+}
+.form-container .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue */
+}
