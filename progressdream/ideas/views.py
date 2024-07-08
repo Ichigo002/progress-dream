@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from manager.models import Project
 
 
 @login_required
@@ -15,3 +16,14 @@ def authView(request):
     else:
         form = UserCreationForm()
     return render(request, "registration/signup.html", {"form" : form})
+\
+@login_required
+def createProject(request):
+    if request.method == "POST":
+        form = Project(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = Project()
+    return render(request, "create_project.html", {'form' : form})
