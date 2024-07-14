@@ -1,0 +1,76 @@
+{% extends "home_base.html" %}
+
+{% block stylesheet %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock stylesheet %}
+
+{% block topbar %}
+    <h2 style="margin-bottom: 25px;">Account Settings</h2>
+{% endblock topbar %}
+
+
+
+{% block main %}
+
+    
+
+    <!-- Change Password Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            Change Password
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <!-- Old Password Input -->
+            <div class="form-group"style="padding: 15px;">
+                <label for="id_old_password">Old Password</label>
+                <input type="password" class="form-control" id="id_old_password" name="old_password" placeholder="Old Password" required>
+            </div>
+
+            <!-- New Password Input -->
+            <div class="form-group"style="padding: 15px;">
+                <label for="id_new_password1">New Password</label>
+                <input type="password" class="form-control {% if form.new_password1.errors %} is-invalid {% endif %}" id="id_new_password1" name="new_password1" placeholder="New Password" required>
+                {% if form.new_password1.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.new_password1.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Confirm New Password Input -->
+            <div class="form-group" style="padding: 15px;">
+                <label for="id_new_password2">Confirm New Password</label>
+                <input type="password" class="form-control {% if form.new_password2.errors %} is-invalid {% endif %}" id="id_new_password2" name="new_password2" placeholder="Confirm New Password" required>
+                {% if form.new_password2.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.new_password2.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+              </form>
+        </div>
+    </div>
+
+    <!-- Delete Account Form -->
+    <div class="card">
+        <div class="card-header">
+            Delete Account
+        </div>
+        <div class="card-body">
+            <p>Are you sure you want to delete your account?</p>
+            <form method="post" action="{% url 'delete_account' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock main %}
