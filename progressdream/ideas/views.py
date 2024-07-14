@@ -5,11 +5,17 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from .models import Project
+from .forms import ProjectForm
 
 class ChangePasswordView(PasswordChangeView):
     form_class = PasswordChangeForm
     success_url = reverse_lazy('account')
     template_name = 'home/account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.user.username
+        return context
 
 @login_required
 def home(request):
@@ -18,7 +24,8 @@ def home(request):
     for i in range(10):
         count.append(i)
 
-    param = { "count" : count }
+    param = { "count" : count,
+              "username" : request.user.username }
     return render(request, "home/home.html", param)
 
 @login_required
@@ -46,4 +53,8 @@ def createProject(request):
             return redirect("home")
     else:
         form = Project()
-    return render(request, "create_project.html", {'form' : form})
+
+    param = {'form' : form, 
+             "username" : request.user.username}
+    
+    return render(request, "home/create_project.html", param)

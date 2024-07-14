@@ -8,4 +8,5 @@ urlpatterns = [
     path("account/delete_account", delete_account, name="delete_account"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("signup/", authView, name="signup"),
+    path("create_project/", createProject, name="create_project"),
 ]

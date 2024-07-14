@@ -1,0 +1,25 @@
+{% extends "home_base.html" %}
+
+
+
+{% block topbar %}
+<h2 style="margin-bottom: 25px;">Create new project</h2>
+{% endblock topbar %}
+
+
+
+{% block main %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+
+{% endblock main %}
+
+
+
+
+{% block scripts %}
+
+{% endblock scripts %}
