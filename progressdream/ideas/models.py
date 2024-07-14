@@ -10,7 +10,6 @@ class Language(m.Model):
         return self.name
 
 
-
 class Technology(m.Model):
     name = m.CharField(max_length=100)
     filename_logo = m.ImageField(upload_to="tech_logos/", max_length=100)
