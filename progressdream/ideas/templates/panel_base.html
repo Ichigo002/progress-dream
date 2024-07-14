@@ -1,0 +1,61 @@
+<!-- BLOCKS: -->
+ <!-- stylesheet -->
+ <!-- topbar -->
+ <!-- main -->
+ <!-- scripts -->
+
+{% extends "base.html" %}
+
+{% block stylesheets %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}"/>
+    {% block stylesheet %}
+    {% endblock stylesheet %}
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navigation (2/12 columns) -->
+        <nav class="col-lg-2 text-light fixed-nav">
+            <div class="nav-userbar">
+                <h4 class="text-center">
+                    <b><i class="bi bi-person-circle"></i> Deciak28</b>
+                </h4>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-person-fill-gear"></i>  Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-lightbulb-fill"></i>  Techs & Langs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-question-diamond-fill"></i>  About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-door-open-fill"></i>  Log out</a>
+                </li>
+
+
+            </ul>
+        </nav>
+
+        <!-- Main Content (10/12 columns) -->
+        <main class="col-lg-10">
+            <div class="main-topbar container-fluid">
+                <div class="column">
+                    <div class="row">
+                        {% block topbar %}{% endblock topbar %}
+                    </div>
+                    {% block main %}{% endblock main %}
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+
+{% endblock content %}
