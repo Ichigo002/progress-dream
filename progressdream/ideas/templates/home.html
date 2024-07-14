@@ -1,33 +1,102 @@
 {% extends "home_base.html" %}
 {% block content %}
 
-<div class="flex-container">
-    <nav>
-        <div>
-            Username
-        </div>
-        <div>Dashboard</div>
-        <div>Campaigns</div>
-        <div>Lists</div>
-        <div>Subscribers</div>
-        <div>Settings</div>
-    </nav>
-    <main>
-        <div class="search-bar">
-            <input type="text" placeholder="Search Projects, lagnuages, Technologies"/>
-            <button>Create</button>
-        </div>
-        <div class="result-box">
-            <div class="result-bar">
-                35 Projects
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navigation (2/12 columns) -->
+        <nav class="col-lg-2 text-light fixed-nav">
+            <div class="nav-userbar">
+                <h4 class="text-center">
+                    <b><i class="bi bi-person-circle"></i> Deciak28</b>
+                </h4>
             </div>
-            <div class="result-container">
-                <!--ELEMENTS-->
-                <div class="result-item"> Lorem ipsum dolor</div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-person-fill-gear"></i>  Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-lightbulb-fill"></i>  Techs & Langs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-question-diamond-fill"></i>  About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'logout' %}"><i class="bi bi-door-open-fill"></i>  Log out</a>
+                </li>
 
+
+            </ul>
+        </nav>
+
+        <!-- Main Content (10/12 columns) -->
+        <main class="col-lg-10">
+            <div class="main-topbar container-fluid">
+                <div class="column">
+                    <div class="row">
+                        <form id="searchForm" class="col-md-10" method="get">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="searchTxt" name="search_input" placeholder="Search projects" />
+                        </form>
+                        <form class="col-md-2" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-success" type="submit">New Idea!</button>
+                        </form>
+                    </div>
+                    <div class="row main-row">
+                        <h2 class="col-md-5"> 5 Results</h2>
+                    </div>
+                    <div class="row main-row overflow-auto justify-content-center overflow-y-scroll">
+                        <!-- CARDS -->
+                        {% for i in count %} 
+
+                        <form class="btn-hidden" action="#test" method="get">
+                            <button type="submit" class="btn-hidden">
+                                <div class="card card-custom-result">
+                                    {% load static %}
+                                    <img src='{% static "tmp/tt.svg" %}' class="card-img-top" style="width: 18rem;" />
+                                    <div class="card-body">
+                                        <div class="card-badge-container">
+                                            <!-- <span class="badge bg-success">Complete</span> -->
+                                            <!-- <span class="badge bg-warning">Working on</span> -->
+                                            <span class="badge bg-danger">Not started</span>
+                                            <span class="badge bg-primary"> <!--FOR TECHNOLOGIES-->
+                                                <a class="badge-a" href="#12">Django</a>
+                                            </span>
+                                            <span class="badge bg-dark"> <!--FOR LANGUAGES-->
+                                                <a class="badge-a" href="#321">Python</a>
+                                            </span>
+                        
+                                        </div>
+                                        <h5 class="card-title">Card Title</h5>
+                                        <p class="card-text">Lorem ipsum dolor sit amet, a dictum viverra lectus, sit amet ullamcorper lectus
+                                            facilisis feugiat. Donec pellentesque diam vel ex tempor,</p>
+                                    </div>
+                                </div>
+                            </button>
+                        </form>
+                    
+
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div>
-    </main>
+
+        </main>
+    </div>
 </div>
 
+
 {% endblock content %}
+
+{% block scripts %}
+
+<script>
+    document.getElementById('searchTxt').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent the default form submission
+            document.getElementById('searchForm').submit(); // Submit the form
+        }
+    });
+</script>
+
+{% endblock scripts %}

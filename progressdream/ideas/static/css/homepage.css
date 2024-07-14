@@ -1,3 +1,128 @@
-body {
-    background-color: rgb(31, 65, 12);
+
+nav {
+    height: 100vh;
+    padding: 0 !important;
+    background-color: #0086c2;
+    font-size: larger;
+}
+
+.nav-userbar {
+    background-color: #0078ae;
+    padding: 15px;
+    height: 70px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-item {
+    padding: 15px 0 15px 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-item:hover {
+    transform: translateX(15px);
+}
+
+.nav-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 60px;
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    .fixed-nav {
+      height: auto; /* Remove full height on small screens */
+    }
+
+}
+
+main {
+    padding: 0 !important;
+    margin: 0;
+    background-color: #ecf0f3;
+}
+
+.main-topbar {
+    background-color: #fff;
+    padding: 15px;
+    height: 70px;
+}
+
+#searchTxt { /*SEARCH INPUT*/
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    width: 90%;
+    padding: 10px;
+    transition: border 1s ease-in-out;
+}
+
+#searchTxt:focus {
+    border: none;
+    padding-bottom: 9px;
+    border-bottom: 1px solid rgb(175, 175, 175);
+
+}
+
+#searchTxt:hover {
+    outline: none;
+}
+
+.search-icon::before {
+    color: #818181;
+    margin-left: 20px;
+}
+
+.main-row {
+    margin-top: 40px; 
+    margin-left: 25px;
+    max-height: calc(100vh - 70px - 46px - 40px - 30px);
+}
+
+/* CARD CSS */
+.card-custom-result {
+    margin: 10px; 
+    width: 20rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-custom-result:hover {
+    transform:translateY(-6px);
+}
+
+.card-badge-container {
+    padding: 5px;
+}
+
+.card-badge-container > .badge:first-child {
+    margin: 0;
+}
+
+.card-badge-container > .badge {
+    transform: scale(1.2);
+    border-radius: 10px !important;
+    margin-left: 20px;
+    margin-bottom: 5px;
+    width: fit-content;
+}
+
+.btn-hidden {
+    width: fit-content;
+    height: fit-content;
+    background-color: none;
+    color: none;
+    border: none;
+}
+
+.badge-a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.badge-a:hover {
+    color: #fff;
+    text-decoration: underline solid;
 }

@@ -5,7 +5,13 @@ from .models import Project
 
 @login_required
 def home(request):
-    return render(request, "home.html", {})
+
+    count = []
+    for i in range(10):
+        count.append(i)
+
+    param = { "count" : count }
+    return render(request, "home.html", param)
 
 def authView(request):
     if request.method == "POST":
