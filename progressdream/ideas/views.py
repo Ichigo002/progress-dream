@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
-from .models import Project
+from django.utils import timezone
 from .forms import ProjectForm
 
 class ChangePasswordView(PasswordChangeView):
@@ -47,12 +47,24 @@ def authView(request):
 @login_required
 def createProject(request):
     if request.method == "POST":
-        form = Project(request.POST or None)
+        form = ProjectForm(request.POST)
+
         if form.is_valid():
-            form.save()
+            p = form.save(commit=False)
+
+            p.date_created = timezone.now()
+            p.user_id = request.user
+
+            status = form.cleaned_data['status_project']
+            p.is_finished = (status == '0')
+            p.is_started = (status == '1')
+            p.is_cancelled = (status == '2')
+
+            p.save()
             return redirect("home")
+        
     else:
-        form = Project()
+        form = ProjectForm()
 
     param = {'form' : form, 
              "username" : request.user.username}
