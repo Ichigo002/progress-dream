@@ -6,7 +6,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.db.models import Q
-from .forms import ProjectForm
+from .forms import *
 from .models import *
 
 class ChangePasswordView(PasswordChangeView):
@@ -50,12 +50,54 @@ def home(request):
     langs = Language.objects.all()
     techs = Technology.objects.all()
 
-    param = { "search_"  : search,
-              "techs"    : techs,
-              "langs"    : langs,
-              "projects" : projects,
-              "username" : request.user.username }
+    param = { 
+        "search_"  : search,
+        "techs"    : techs,
+        "langs"    : langs,
+        "projects" : projects,
+        "username" : request.user.username 
+    }
     return render(request, "home/home.html", param)
+
+def techlang(request):
+
+    if request.method == "POST":
+        if request.POST.get("type") == '1':
+            techform = TechnologyForm(request.POST, request.FILES)
+            print(request.FILES.get('filename_logo'))
+            if techform.is_valid():
+                name = techform.cleaned_data.get("name")
+                filename_logo = techform.cleaned_data.get("filename_logo")
+                website_link = techform.cleaned_data.get("website_link")
+
+                obj = Technology.objects.create(
+                    name = name,
+                    filename_logo = filename_logo,
+                    website_link = website_link
+                )
+                obj.save()
+
+                return redirect("home")
+            else:
+                langform = LanguageForm()
+        else:
+            langform = TechnologyForm(request.POST, request.FILES)
+            if langform.is_valid():
+                langform.save()
+                return redirect("home")
+            else:
+                techform = TechnologyForm()
+    else:
+        techform = TechnologyForm()
+        langform = LanguageForm()
+
+    param = {
+        "langform" : langform,
+        "techform" : techform,
+        "username" : request.user.username
+    }
+
+    return render(request, "home/techlang.html", param)
 
 @login_required
 def delete_account(request):

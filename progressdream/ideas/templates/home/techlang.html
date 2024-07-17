@@ -1,0 +1,95 @@
+{% extends "home_base.html" %}
+
+
+{% block topbar %}
+<h2 style="margin-bottom: 25px;">Technologies & Languages</h2>
+{% endblock topbar %}
+
+
+
+{% block main %}
+
+<div class="card">
+    <div class="card-header">Add new technology</div>
+    <form method="post" class="card-body">
+        {% csrf_token %}
+        <input type="hidden" name="type" value="1"/>
+
+        <div class="flex-container" style="padding: 15px;">
+
+            {% if techform.errors %}
+            <div class="card bg-danger text-light"
+                style="padding:10px; margin: 10px; border-radius: 5px; margin-bottom: 20px">
+                {% for field, errors in techform.errors.items %}
+                <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Loop through each form field -->
+            {{ techform.as_p }}
+
+
+
+            <button class="btn btn-primary">Add!</button>
+
+        </div>
+    </form>
+
+</div>
+
+<div class="card" style="margin-top: 15px;">
+    <div class="card-header">Add new language</div>
+    <form method="post" class="card-body" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="type" value="0"/>
+
+        <div class="flex-container" style="padding: 15px;">
+
+            {% if langform.errors %}
+            <div class="card bg-danger text-light"
+                style="padding:10px; margin: 10px; border-radius: 5px; margin-bottom: 20px">
+                {% for field, errors in langform.errors.items %}
+                <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Loop through each form field -->
+            {{ langform.as_p }}
+
+
+
+            <button class="btn btn-primary">Create!</button>
+
+        </div>
+    </form>
+</div>
+
+
+{% endblock main %}
+
+{% block scripts %}
+
+<script>
+
+    function add_class_to(field, add_class) {
+        let elems = $(field);
+        for (let i = 0; i < elems.length; i++) {
+            const e = elems[i];
+            e.classList.add(add_class);
+        }
+    }
+
+    add_class_to("input[type='text']", "form-control");
+    add_class_to("input[type='radio']", "form-check-input");
+    add_class_to("select", "form-select");
+    add_class_to("textarea", "form-control");
+
+    $("#id_date_deadline").attr("type", "date");
+
+
+
+</script>
+
+{% endblock scripts %}

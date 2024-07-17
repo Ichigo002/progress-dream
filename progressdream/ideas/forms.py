@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import *
 
 class ProjectForm(forms.ModelForm):
     status_project = forms.ChoiceField(
@@ -16,4 +16,24 @@ class ProjectForm(forms.ModelForm):
             'date_deadline', 
             'description', 
             'github_link'
+        ]
+
+class TechnologyForm(forms.ModelForm):
+
+    class Meta:
+        model = Technology
+        fields = [
+            'name',
+            'filename_logo',
+            'website_link',
+        ]
+
+class LanguageForm(forms.ModelForm):
+
+    class Meta:
+        model = Language
+        fields = [
+            'name',
+            'filename_logo',
+            'website_link',
         ]
