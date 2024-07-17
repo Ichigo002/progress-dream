@@ -31,12 +31,14 @@ nav {
     left: 60px;
     text-align: center;
 }
-
 @media (max-width: 992px) {
     .fixed-nav {
       height: auto; /* Remove full height on small screens */
     }
 
+    .flex-results {
+        display: block !important;
+    }
 }
 
 main {
@@ -80,6 +82,25 @@ main {
     margin-top: 40px; 
     margin-left: 25px;
     max-height: calc(100vh - 70px - 46px - 40px - 30px);
+}
+ 
+.flex-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-filter { 
+    background-color: #fff !important;
+    border: 1px solid #ced4da !important;
+    color: #000 !important;
+}
+
+.btn-filter:focus { 
+    background-color: #fff !important;
+    border: 1px solid #86b7fe !important;
+    outline: 5px solid #c2dbfe !important;
+    color: #000 !important;
 }
 
 /* CARD CSS */

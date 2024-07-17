@@ -5,9 +5,9 @@
 {% block topbar %}
 <form id="searchForm" class="col-md-10" method="get">
     <i class="bi bi-search search-icon"></i>
-    <input type="text" id="searchTxt" name="search_input" placeholder="Search projects" />
+    <input type="text" id="searchTxt" name="search_input" value="{{ search_ }}" placeholder="Search projects" />
 </form>
-<form class="col-md-2" action="{% url "create_project" %}" method="get">
+<form class="col-md-2" action="{% url 'create_project' %}" method="get">
     <button class="btn btn-success" type="submit">New Idea!</button>
 </form>
 {% endblock topbar %}
@@ -15,36 +15,87 @@
 
 
 {% block main %}
-
 <div class="row main-row">
-    <h2 class="col-md-5"> 5 Results</h2>
+    <div class="flex-results">
+        <h2 class="col-md-5"> {{ projects.count }} Results</h2>
+        <form method="get" class="col-md-5" style="display: flex; gap: 15px;">
+            <input type="hidden" name="search_input" value="{{ search_ }}"/>
+            <!-- DROPDOWN LANGUAGE -->
+            <div class="btn-group">
+                <button type="button" class="btn-filter btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Language
+                </button>
+                <ul class="dropdown-menu">
+                    {% for l in langs %}
+                    <li style="padding: 5px;">
+                        <input class="form-check-input" name="language_filter[]" type="checkbox" value="{{ l.id }}"
+                            id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ l.name }}
+                        </label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- DROPDOWN TECHNOLOGY -->
+            <div class="btn-group">
+                <button type="button" class="btn-filter btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Technology
+                </button>
+                <ul class="dropdown-menu">
+                    {% for l in techs %}
+                    <li style="padding: 5px;">
+                        <input class="form-check-input" name="technology_filter[]" type="checkbox" value="{{ l.id }}"
+                            id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ l.name }}
+                        </label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <button type="submit" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
+
+        </form>
+    </div>
 </div>
 <div class="row main-row overflow-auto justify-content-center overflow-y-scroll">
     <!-- CARDS -->
-    {% for i in count %}
+    {% for p in projects %}
 
-    <form class="btn-hidden" action="#test" method="get">
+    <form class="btn-hidden" method="get">
         <button type="submit" class="btn-hidden">
             <div class="card card-custom-result">
                 {% load static %}
                 <img src='{% static "tmp/tt.svg" %}' class="card-img-top" style="width: 18rem;" />
                 <div class="card-body">
                     <div class="card-badge-container">
-                        <!-- <span class="badge bg-success">Complete</span> -->
-                        <!-- <span class="badge bg-warning">Working on</span> -->
+
+                        {% if p.is_finished %}
+                        <span class="badge bg-success">Complete</span>
+                        {% elif p.is_started %}
+                        <span class="badge bg-warning">Working on</span>
+                        {% elif p.is_cancelled %}
+                        <span class="badge bg-danger">Cancelled</span>
+                        {% else %}
                         <span class="badge bg-danger">Not started</span>
+                        {% endif %}
+
+
                         <span class="badge bg-primary"> <!--FOR TECHNOLOGIES-->
-                            <a class="badge-a" href="#12">Django</a>
+                            <a class="badge-a" href="{{ p.tech_id.website_link }}">{{ p.tech_id.name }}</a>
                         </span>
                         <span class="badge bg-dark"> <!--FOR LANGUAGES-->
-                            <a class="badge-a" href="#321">Python</a>
+                            <a class="badge-a" href="{{ p.lang_id.website_link }}">{{ p.lang_id.name }}</a>
                         </span>
 
                     </div>
-                    <h5 class="card-title">Card Title</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, a dictum viverra lectus, sit amet ullamcorper
-                        lectus
-                        facilisis feugiat. Donec pellentesque diam vel ex tempor,</p>
+                    <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="card-text">{{ p.description }}</p>
                 </div>
             </div>
         </button>

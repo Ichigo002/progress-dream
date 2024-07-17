@@ -5,7 +5,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.db.models import Q
 from .forms import ProjectForm
+from .models import *
 
 class ChangePasswordView(PasswordChangeView):
     form_class = PasswordChangeForm
@@ -20,11 +22,38 @@ class ChangePasswordView(PasswordChangeView):
 @login_required
 def home(request):
 
-    count = []
-    for i in range(10):
-        count.append(i)
+    projects = Project.objects.filter(user_id=request.user.id)
 
-    param = { "count" : count,
+    if request.method == "GET":
+        search = request.GET.get('search_input', '')
+
+        tech_filter = request.GET.getlist('technology_filter[]')
+        lang_filter = request.GET.get('language_filter[]')
+
+        if search:
+            projects = projects.filter(
+                Q(title__icontains = search) | # __icontains add contain search
+                Q(description__icontains = search))
+        
+        if tech_filter:
+            for t in tech_filter:
+                projects = projects.filter(tech_id = t) 
+
+        if lang_filter:
+            for t in lang_filter:
+                projects = projects.filter(lang_id = t) # __ connects like . different tables
+
+        
+
+    projects = projects.select_related("lang_id").select_related("tech_id")
+
+    langs = Language.objects.all()
+    techs = Technology.objects.all()
+
+    param = { "search_"  : search,
+              "techs"    : techs,
+              "langs"    : langs,
+              "projects" : projects,
               "username" : request.user.username }
     return render(request, "home/home.html", param)
 
