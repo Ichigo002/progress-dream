@@ -23,6 +23,7 @@ class ChangePasswordView(PasswordChangeView):
 def home(request):
 
     projects = Project.objects.filter(user_id=request.user.id)
+    search = ""
 
     if request.method == "GET":
         search = request.GET.get('search_input', '')
@@ -63,30 +64,31 @@ def techlang(request):
 
     if request.method == "POST":
         if request.POST.get("type") == '1':
-            techform = TechnologyForm(request.POST, request.FILES)
+            techform = TechnologyForm(data=request.POST, files=request.FILES)
             print(request.FILES.get('filename_logo'))
             if techform.is_valid():
-                name = techform.cleaned_data.get("name")
-                filename_logo = techform.cleaned_data.get("filename_logo")
-                website_link = techform.cleaned_data.get("website_link")
+                techform.save()
+                # name = techform.cleaned_data.get("name")
+                # filename_logo = techform.cleaned_data.get("filename_logo")
+                # website_link = techform.cleaned_data.get("website_link")
 
-                obj = Technology.objects.create(
-                    name = name,
-                    filename_logo = filename_logo,
-                    website_link = website_link
-                )
-                obj.save()
+                # obj = Technology.objects.create(
+                #     name = name,
+                #     filename_logo = filename_logo,
+                #     website_link = website_link
+                # )
+                # obj.save()
 
                 return redirect("home")
             else:
                 langform = LanguageForm()
-        else:
-            langform = TechnologyForm(request.POST, request.FILES)
-            if langform.is_valid():
-                langform.save()
-                return redirect("home")
-            else:
-                techform = TechnologyForm()
+        # else:
+        #     langform = LanguageForm(request.POST, request.FILES)
+        #     if langform.is_valid():
+        #         langform.save()
+        #         return redirect("home")
+        #     else:
+        #         techform = LanguageForm()
     else:
         techform = TechnologyForm()
         langform = LanguageForm()

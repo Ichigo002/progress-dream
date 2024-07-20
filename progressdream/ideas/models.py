@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Language(m.Model):
     name = m.CharField(max_length=40)
-    filename_logo = m.ImageField(upload_to="tech_logos/", max_length=100)
+    filename_logo = m.ImageField(default='defaultpic.png', blank=True)
     website_link = m.URLField(max_length=255)
 
     def __str__(self):
@@ -12,7 +12,7 @@ class Language(m.Model):
 
 class Technology(m.Model):
     name = m.CharField(max_length=100)
-    filename_logo = m.ImageField(upload_to="tech_logos/", max_length=100)
+    filename_logo = m.ImageField(upload_to="tech_logos/%y")
     website_link = m.URLField(max_length=255)
 
     def __str__(self):

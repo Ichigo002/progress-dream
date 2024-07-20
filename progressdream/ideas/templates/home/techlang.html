@@ -40,7 +40,8 @@
 
 <div class="card" style="margin-top: 15px;">
     <div class="card-header">Add new language</div>
-    <form method="post" class="card-body" enctype="multipart/form-data">
+    <form method="post" action="." class="card-body" enctype="multipart/form-data">
+        
         {% csrf_token %}
         <input type="hidden" name="type" value="0"/>
 
