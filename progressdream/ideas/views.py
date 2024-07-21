@@ -63,35 +63,22 @@ def home(request):
 def techlang(request):
 
     if request.method == "POST":
-        if request.POST.get("type") == '1':
+        if request.POST.get("type") == '1': # Technology
             techform = TechnologyForm(data=request.POST, files=request.FILES)
-            print(request.FILES.get('filename_logo'))
             if techform.is_valid():
                 techform.save()
-                # name = techform.cleaned_data.get("name")
-                # filename_logo = techform.cleaned_data.get("filename_logo")
-                # website_link = techform.cleaned_data.get("website_link")
-
-                # obj = Technology.objects.create(
-                #     name = name,
-                #     filename_logo = filename_logo,
-                #     website_link = website_link
-                # )
-                # obj.save()
-
-                return redirect("home")
-            else:
+                techform = TechnologyForm()
+            langform = LanguageForm()
+        else: # Langauge
+            langform = LanguageForm(request.POST, request.FILES)
+            if langform.is_valid():
+                langform.save()
                 langform = LanguageForm()
-        # else:
-        #     langform = LanguageForm(request.POST, request.FILES)
-        #     if langform.is_valid():
-        #         langform.save()
-        #         return redirect("home")
-        #     else:
-        #         techform = LanguageForm()
+            techform = TechnologyForm()
     else:
         techform = TechnologyForm()
         langform = LanguageForm()
+
 
     param = {
         "langform" : langform,
