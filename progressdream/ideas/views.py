@@ -61,7 +61,7 @@ def home(request):
     return render(request, "home/home.html", param)
 
 def techlang(request):
-
+    
     if request.method == "POST":
         if request.POST.get("type") == '1': # Technology
             techform = TechnologyForm(data=request.POST, files=request.FILES)
