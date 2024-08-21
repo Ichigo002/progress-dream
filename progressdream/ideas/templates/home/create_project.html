@@ -9,8 +9,8 @@
 
 
 {% block main %}
-
-<form method="post">
+<div class="row main-row overflow-auto justify-content-center overflow-y-scroll">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div class="flex-container" style="padding: 15px;">
@@ -28,11 +28,17 @@
         {{ form.as_p }}
 
 
+        {{ screenshot_formset.management_form }}
+        {% for form in screenshot_formset %}
+            {{ form.as_p }}
+        {% endfor %}
+
 
         <button class="btn btn-primary">Create!</button>
 
     </div>
 </form>
+</div>
 
 {% endblock main %}
 

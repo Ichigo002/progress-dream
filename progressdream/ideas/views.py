@@ -60,6 +60,7 @@ def home(request):
     }
     return render(request, "home/home.html", param)
 
+@login_required
 def techlang(request):
     
     if request.method == "POST":
@@ -94,6 +95,12 @@ def delete_account(request):
     user.delete()
     return redirect("home")
 
+def about(request):
+    param = {
+        "username" : request.user.username
+    }
+    return render(request, "home/about.html", param)
+
 def authView(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST or None)
@@ -104,12 +111,19 @@ def authView(request):
         form = UserCreationForm()
     return render(request, "registration/signup.html", {"form" : form})
 
+### MAKE IN THE FUTURE MULTI-IMAGE UPLOAD
+###
+### Making code below working with uploading image as seperated modelForm 
+### cost me 2 days of work. BECAUSE OF THAT I didn't want to code it 
+### and had a 1 month break AGAIN! Fuck you iamge.
+
 @login_required
 def createProject(request):
     if request.method == "POST":
         form = ProjectForm(request.POST)
+        screenshot_formset = ScreenshotFormSet(request.POST, request.FILES)
 
-        if form.is_valid():
+        if form.is_valid() and screenshot_formset.is_valid():
             p = form.save(commit=False)
 
             p.date_created = timezone.now()
@@ -121,12 +135,20 @@ def createProject(request):
             p.is_cancelled = (status == '2')
 
             p.save()
+
+            screenshots = screenshot_formset.save(commit=False)
+            for screenshot in screenshots:
+                screenshot.project_id = p
+                screenshot.save()
+
             return redirect("home")
         
     else:
         form = ProjectForm()
+        screenshot_formset = ScreenshotFormSet()
 
     param = {'form' : form, 
+             'screenshot_formset': screenshot_formset,
              "username" : request.user.username}
     
     return render(request, "home/create_project.html", param)
