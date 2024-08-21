@@ -67,7 +67,8 @@
     <!-- CARDS -->
     {% for p in projects %}
 
-    <form class="btn-hidden" method="get">
+    <form class="btn-hidden" method="get" action="{% url 'details' %}">
+        <input type="hidden" name="cardtitle" value="{{ p.title }}">
         <button type="submit" class="btn-hidden">
             <div class="card card-custom-result">
                 {% load static %}

@@ -14,6 +14,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("signup/", authView, name="signup"),
     path("create_project/", createProject, name="create_project"),
+    path("details/", displayDetails, name="details")
 ]
 
 if settings.DEBUG:

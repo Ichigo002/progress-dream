@@ -1,0 +1,18 @@
+{% extends "home_base.html" %}
+
+{% block stylesheet %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock stylesheet %}
+ 
+{% block topbar %}
+    <h2 style="margin-bottom: 25px;">PROJECT: {{ project.title }}</h2>
+{% endblock topbar %}
+
+
+
+{% block main %}
+
+   {{ project.description }}
+
+{% endblock main %}

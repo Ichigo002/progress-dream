@@ -20,6 +20,21 @@ class ChangePasswordView(PasswordChangeView):
         return context
 
 @login_required
+def displayDetails(request):
+    if request.method == "GET":
+        v  = request.GET.get('cardtitle', None)
+        if v == None:
+            return redirect("home")
+        p = Project.objects.filter(user_id = request.user.id, title = v) # QuerySet
+        param = {
+            "project" : p[0],
+            "username" : request.user.username,
+        }
+        return render(request, "home/details.html", param)
+    else:
+        return redirect("home")
+
+@login_required
 def home(request):
 
     projects = Project.objects.filter(user_id=request.user.id)
