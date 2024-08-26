@@ -24,7 +24,7 @@ class ProjectForm(forms.ModelForm):
 class ScreenshotForm(forms.ModelForm):
     class Meta:
         model = Screenshot
-        fields = '__all__'
+        fields = ['filename',]
 
 ScreenshotFormSet = inlineformset_factory(Project, Screenshot, form=ScreenshotForm, extra=1)
 
@@ -34,7 +34,6 @@ class TechnologyForm(forms.ModelForm):
         model = Technology
         fields = [
             'name',
-            'filename_logo',
             'website_link',
         ]
 
@@ -44,6 +43,5 @@ class LanguageForm(forms.ModelForm):
         model = Language
         fields = [
             'name',
-            'filename_logo',
             'website_link',
         ]

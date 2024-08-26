@@ -26,9 +26,12 @@ def displayDetails(request):
         if v == None:
             return redirect("home")
         p = Project.objects.filter(user_id = request.user.id, title = v) # QuerySet
+
+        p = p.select_related("lang_id").select_related("tech_id")
+        p = p.prefetch_related("screenshots")
+ 
         param = {
             "project" : p[0],
-            "username" : request.user.username,
         }
         return render(request, "home/details.html", param)
     else:
@@ -63,10 +66,6 @@ def home(request):
 
     projects = projects.select_related("lang_id").select_related("tech_id")
     projects = projects.prefetch_related("screenshots")
-    for project in projects:
-        print(f"Project: {project.title}")
-        for screenshot in project.screenshots.all():
-            print(f" - Screenshot: {screenshot.filename.url}")
 
     langs = Language.objects.all()
     techs = Technology.objects.all()
@@ -84,13 +83,13 @@ def techlang(request):
     
     if request.method == "POST":
         if request.POST.get("type") == '1': # Technology
-            techform = TechnologyForm(data=request.POST, files=request.FILES)
+            techform = TechnologyForm(data=request.POST)
             if techform.is_valid():
                 techform.save()
                 techform = TechnologyForm()
             langform = LanguageForm()
         else: # Langauge
-            langform = LanguageForm(request.POST, request.FILES)
+            langform = LanguageForm(request.POST)
             if langform.is_valid():
                 langform.save()
                 langform = LanguageForm()

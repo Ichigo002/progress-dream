@@ -12,7 +12,16 @@
 
 
 {% block main %}
+ 
+<span class="badge bg-primary"> <!--FOR TECHNOLOGIES-->
+    <a class="badge-a" href="{{ project.tech_id.website_link }}">{{ project.tech_id.name }}</a>
+</span>
+<span class="badge bg-dark"> <!--FOR LANGUAGES-->
+    <a class="badge-a" href="{{ project.lang_id.website_link }}">{{ project.lang_id.name }}</a>
+</span>
+
 
    {{ project.description }}
+
 
 {% endblock main %}
