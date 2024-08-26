@@ -29,8 +29,10 @@ def displayDetails(request):
 
         p = p.select_related("lang_id").select_related("tech_id")
         p = p.prefetch_related("screenshots")
- 
+
+        
         param = {
+            "query_string" : request.GET.urlencode(),
             "project" : p[0],
         }
         return render(request, "home/details.html", param)

@@ -1,27 +1,77 @@
 {% extends "home_base.html" %}
 
 {% block stylesheet %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+
+<style>
+    .max-badge-size {
+        width: fit-content !important;
+
+    }
+</style>
+
 {% endblock stylesheet %}
- 
+
 {% block topbar %}
-    <h2 style="margin-bottom: 25px;">PROJECT: {{ project.title }}</h2>
+<div style="display:flex;">
+    <a href="{% url 'home' %}">
+        <i class="bi bi-arrow-left-circle-fill" style="font-size: 25px"></i>
+    </a>
+    <div style="width: 40px">
+    </div>
+    <h2 style="margin-bottom: 25px; font-weight: bold;">{{ project.title }}</h2>
+
+    <span class="badge bg-primary" style="max-height: 20px; margin: 10px;"> <!--FOR TECHNOLOGIES-->
+        <a class="badge-a" href="{{ project.tech_id.website_link }}">{{ project.tech_id.name }}</a>
+    </span>
+    <span class="badge bg-dark" style="max-height: 20px; margin: 10px;"> <!--FOR LANGUAGES-->
+        <a class="badge-a" href="{{ project.lang_id.website_link }}">{{ project.lang_id.name }}</a>
+    </span>
+</div>
 {% endblock topbar %}
 
 
 
 {% block main %}
- 
-<span class="badge bg-primary"> <!--FOR TECHNOLOGIES-->
-    <a class="badge-a" href="{{ project.tech_id.website_link }}">{{ project.tech_id.name }}</a>
-</span>
-<span class="badge bg-dark"> <!--FOR LANGUAGES-->
-    <a class="badge-a" href="{{ project.lang_id.website_link }}">{{ project.lang_id.name }}</a>
-</span>
+<div class="row overflow-auto justify-content-center overflow-y-scroll" style="max-height: calc(100vh - 40px - 30px);">
+    {% if project.screenshots.all %}
+        {% for screenshot in project.screenshots.all %}
+            <img src="{{ screenshot.filename.url }}" class="img-details" />
+        {% endfor %}
+    {% else %}
+        {% load static %}
+        <img class="first-img" src="{% static 'img/favicon.svg' %}" class="card-img-top" style="width: 18rem;" />
+    {% endif %}
 
+    <a href="{{ project.github_link }}" target="_blank" style="display: inline-block; text-decoration: none;">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" style="width: 40px; height: 40px;">
+        <span style="vertical-align: middle; margin-left: 8px; font-family: Arial, sans-serif; font-size: 16px; color: #000;">Follow on GitHub</span>
+    </a>
 
-   {{ project.description }}
+    <div>
+        Created at: {{ project.date_created }}
+    </div>
+    <div>
+        Deadline: {{ project.date_deadline }}
+    </div>
 
+    <div>
+        {% if project.is_finished %}
+            <span class="badge bg-success max-badge-size">Complete</span>
+        {% elif project.is_started %}
+            <span class="badge bg-warning max-badge-size">Working on</span>
+        {% elif project.is_cancelled %}
+            <span class="badge bg-danger max-badge-size">Cancelled</span>
+        {% else %}
+            <span class="badge bg-danger max-badge-size">Not started</span>
+        {% endif %}
+    </div>  
 
+    <p style="font-size: 2rem;">
+        {{ project.description }}
+    </p>
+    
+
+</div>
 {% endblock main %}

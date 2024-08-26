@@ -116,6 +116,10 @@ main {
     text-align: center;
 }
 
+.img-details {
+    max-width: 100%;
+}
+
 .card-custom-result {
     margin: 10px; 
     width: 20rem;
