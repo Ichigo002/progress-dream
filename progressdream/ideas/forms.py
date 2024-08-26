@@ -6,7 +6,7 @@ from django.forms import inlineformset_factory
 
 class ProjectForm(forms.ModelForm):
     status_project = forms.ChoiceField(
-        choices=[(0, 'Finished?'), (1, 'Working on?'), (2, 'Cancelled?')],
+        choices=[(0, 'Finished?'), (1, 'Working on?'), (2, 'Cancelled?'), (3, 'Not even started')],
         widget=forms.RadioSelect,
     )
 

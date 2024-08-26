@@ -71,8 +71,16 @@
         <input type="hidden" name="cardtitle" value="{{ p.title }}">
         <button type="submit" class="btn-hidden">
             <div class="card card-custom-result">
-                {% load static %}
-                <img src='{% static "tmp/tt.svg" %}' class="card-img-top" style="width: 18rem;" />
+                <div class="img-center-div">
+                {% if p.screenshots.all %}
+                    {% with p.screenshots.all|first as first_screenshot %}
+                            <img class="first-img" src="{{ first_screenshot.filename.url }}" class="card-img-top"/>
+                    {% endwith %}
+                {% else %}
+                    {% load static %}
+                    <img class="first-img" src="{% static "img/favicon.svg" %}" class="card-img-top" style="width: 18rem;" />
+                {% endif %}
+                </div>
                 <div class="card-body">
                     <div class="card-badge-container">
 

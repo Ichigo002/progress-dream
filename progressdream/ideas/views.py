@@ -62,6 +62,11 @@ def home(request):
         
 
     projects = projects.select_related("lang_id").select_related("tech_id")
+    projects = projects.prefetch_related("screenshots")
+    for project in projects:
+        print(f"Project: {project.title}")
+        for screenshot in project.screenshots.all():
+            print(f" - Screenshot: {screenshot.filename.url}")
 
     langs = Language.objects.all()
     techs = Technology.objects.all()
@@ -71,7 +76,6 @@ def home(request):
         "techs"    : techs,
         "langs"    : langs,
         "projects" : projects,
-        "username" : request.user.username 
     }
     return render(request, "home/home.html", param)
 
@@ -99,7 +103,6 @@ def techlang(request):
     param = {
         "langform" : langform,
         "techform" : techform,
-        "username" : request.user.username
     }
 
     return render(request, "home/techlang.html", param)
@@ -111,10 +114,7 @@ def delete_account(request):
     return redirect("home")
 
 def about(request):
-    param = {
-        "username" : request.user.username
-    }
-    return render(request, "home/about.html", param)
+    return render(request, "home/about.html")
 
 def authView(request):
     if request.method == "POST":
@@ -164,6 +164,6 @@ def createProject(request):
 
     param = {'form' : form, 
              'screenshot_formset': screenshot_formset,
-             "username" : request.user.username}
+             }
     
     return render(request, "home/create_project.html", param)

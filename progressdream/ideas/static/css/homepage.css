@@ -104,6 +104,18 @@ main {
 }
 
 /* CARD CSS */
+
+.first-img {
+    max-width:300px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.img-center-div {
+    width: 100%;
+    text-align: center;
+}
+
 .card-custom-result {
     margin: 10px; 
     width: 20rem;

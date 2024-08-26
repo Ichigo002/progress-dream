@@ -39,8 +39,8 @@ class Project(m.Model):
     
 class Screenshot(m.Model):
     # id specified automatically by django
-    project_id = m.ForeignKey(Project, on_delete=m.CASCADE)
-    filename = m.ImageField(upload_to="screenshots/")
+    project_id = m.ForeignKey(Project, on_delete=m.CASCADE, related_name="screenshots")
+    filename = m.ImageField(upload_to="screenshots/", verbose_name="Screenshot image")
 
     def __str__(self):
         return self.filename
