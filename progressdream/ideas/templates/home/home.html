@@ -74,11 +74,11 @@
                 <div class="img-center-div">
                 {% if p.screenshots.all %}
                     {% with p.screenshots.all|first as first_screenshot %}
-                            <img class="first-img" src="{{ first_screenshot.filename.url }}" class="card-img-top"/>
+                            <img class="first-img" src="{{ first_screenshot.filename.url }}" alt="Screenshot of project or idead:)" class="card-img-top"/>
                     {% endwith %}
                 {% else %}
                     {% load static %}
-                    <img class="first-img" src="{% static "img/favicon.svg" %}" class="card-img-top" style="width: 18rem;" />
+                    <img class="first-img" src="{% static "img/favicon.svg" %}" alt="Default icon of application because there is no any screenshot yet for this project." class="card-img-top" style="width: 18rem;" />
                 {% endif %}
                 </div>
                 <div class="card-body">
@@ -96,10 +96,10 @@
 
 
                         <span class="badge bg-primary"> <!--FOR TECHNOLOGIES-->
-                            <a class="badge-a" href="{{ p.tech_id.website_link }}" target="_blank" rel="noopener" title="{{ p.tech_id.name }}, Open link in new tab">{{ p.tech_id.name }}</a>
+                            <a class="badge-a" href="{{ p.tech_id.website_link }}" aria-label="Go to website of technology: {{ p.tech_id.name }}" target="_blank" rel="noopener" title="{{ p.tech_id.name }}, Open link in new tab">{{ p.tech_id.name }}</a>
                         </span>
                         <span class="badge bg-dark"> <!--FOR LANGUAGES-->
-                            <a class="badge-a" href="{{ p.lang_id.website_link }}" target="_blank" rel="noopener" title="{{ p.lang_id.name }}, Open link in new tab">{{ p.lang_id.name }}</a>
+                            <a class="badge-a" href="{{ p.lang_id.website_link }}" aria-label="Go to website of programing language: {{ p.lang_id.name }}" target="_blank" rel="noopener" title="{{ p.lang_id.name }}, Open link in new tab">{{ p.lang_id.name }}</a>
                         </span>
 
                     </div>
